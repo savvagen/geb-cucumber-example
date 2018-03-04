@@ -32,8 +32,8 @@ class GmailPage extends Page {
         successMessage {$(By.xpath("/html/body/div[7]/div[3]/div/div[1]/div[5]/div[1]/div/div[3]/div/div/div[2]"))}
         //Create list of messages modules
         messagesContainer { $(By.xpath('//div[@role="main"]/div[6]/div/div[1]/div[2]/div/table/tbody')) }
-        messagesCollection { messagesContainer.find("tr").findAll()}
-        messages { messagesContainer.find('tr').moduleList(Message)}
+        messagesCollection(wait: 5) { messagesContainer.find("tr").findAll()}
+        messages(wait: 10, required: true) { messagesContainer.find('tr').moduleList(Message)}
     }
 
     @Step("Open Main page")

@@ -118,18 +118,19 @@ cucumber {
                 'src/test/resources/env',
                 'src/main/groovy/com/example/steps']
     featureDirs = ['src/test/resources/features']*/
-
 }
 
 
 tasks.cucumber {
-    System.setProperty "geb.env", "chrome"
     dependsOn configureChromeDriverBinary, configureGeckoDriverBinary
     jvmOptions.systemProperties([
             "geb.cucumber.step.packages": "com.example.pages",
-            "geb.env": System.getProperty("geb.env")
+            "geb.env": System.getProperty("geb.env"),
     ])
 }
+
+
+
 
 tasks.withType(GroovyCompile) {
     groovyOptions.forkOptions.memoryMaximumSize = '256m'

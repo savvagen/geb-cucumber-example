@@ -1,7 +1,6 @@
 package com.example.modules
 
 import geb.Module
-import com.example.modules.SearchResult
 
 class SearchResults extends Module{
 

@@ -14,6 +14,8 @@ import geb.binding.BindingUpdater
 def bindingUpdater
 def theBrowser
 
+
+
 Before { scenario ->
     if(!binding.hasVariable('browser')) {
         theBrowser = new Browser()
@@ -27,16 +29,18 @@ Before { scenario ->
 
 After { scenario ->
     bindingUpdater?.remove()
-
+    theBrowser.go "https://accounts.google.com/Logout"
+    theBrowser.driver.manage().deleteAllCookies()
     // embed screenshot into cucumber report
-    if(scenario.failed) {
+    if (scenario.failed) {
         try {
             scenario.embed(theBrowser.driver.getScreenshotAs(OutputType.BYTES), "image/png")
-        } catch(WebDriverException e) {
+        } catch (WebDriverException e) {
             // sometime firefox runs out of memory trying to take a screenshot, not a big deal so ignore
-        } catch(MissingMethodException e) {
+        } catch (MissingMethodException e) {
             // HTMLUnit doesn't support screenshots
         }
     }
 
 }
+
