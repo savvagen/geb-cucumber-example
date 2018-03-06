@@ -40,12 +40,15 @@ class AcceptanceTests extends GebSpec {
 
     def "user can search"(){
         given:
+        "Go to the Search page"
         to SearchPage
 
         when:
+        "Search for: Selenium Webdriver"
         search("Selenium WebDriver")
 
         then:
+        "verify results results"
         //We can write conditions without assert
         title == "Selenium WebDriver - Пошук Google"
         searchResults.results.size() <= 10

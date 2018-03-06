@@ -21,9 +21,11 @@ class ApiExampleTests {
             headers.Accept = 'application/json'
             response.success = { resp, json ->
                 assert resp.statusLine.statusCode == 200
+                assert json.userId == 1
+                assert json.phones.size() == 2
                 println "Got response: ${resp.statusLine}"
                 println "Content-Type: ${resp.headers.'Content-Type'}"
-                println new JsonBuilder(json).toPrettyString()
+                println new JsonBuilder(json)
                 println json.userId
                 println json.phones[0]
                 User client = json.asType(User)
@@ -42,6 +44,8 @@ class ApiExampleTests {
             //body = ["userId":1,"firstName":"Test","lastName":"TestUser","email":"genchevskiy.test@gmail.com", "password": "s.g19021992", "phones":["+380995475717","+380995475718"]]
             response.success = { resp, json ->
                 assert resp.statusLine.statusCode == 200
+                assert json.status == "success"
+                assert json.message == "User have been registered successfully!"
                 println "Got response: ${resp.statusLine}"
                 println "Content-Type: ${resp.headers.'Content-Type'}"
                 println new JsonBuilder(json).toPrettyString()
