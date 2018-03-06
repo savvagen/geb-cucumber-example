@@ -167,7 +167,6 @@ allure {
 
 }
 
-
 import io.qameta.allure.gradle.task.AllureReport
 
 task allureAggregatedReport(type: AllureReport) {
@@ -267,7 +266,6 @@ drivers.collect { tasks["${it}Test"].finalizedBy allureAggregatedReport }
 
 
 
-/*
 drivers.each { driver ->
         task "${driver}Spock"(type: Test) {
             systemProperty 'com.athaydes.spockframework.report.outputDir', 'build/reports/spock'
@@ -276,7 +274,7 @@ drivers.each { driver ->
         }
     }
 drivers.collect { tasks["${it}Spock"].finalizedBy allureAggregatedReport }
-*/
+
 
 
 task apiTest(type: Test){
