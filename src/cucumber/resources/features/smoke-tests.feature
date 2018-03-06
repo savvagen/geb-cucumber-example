@@ -2,7 +2,7 @@
 Feature: Check all main futures of Google
 
 
-  Scenario: User make positive authorization
+  Scenario: User can make authorization
     Given User go to login page
     When User login with email: 'genchevskiy.test@gmail.com' and password: 's.g19021992'
     Then User is at account page

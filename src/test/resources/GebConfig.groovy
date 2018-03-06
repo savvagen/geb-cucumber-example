@@ -1,5 +1,6 @@
 import io.github.bonigarcia.wdm.ChromeDriverManager
 import io.github.bonigarcia.wdm.WebDriverManager
+import org.apache.log4j.PropertyConfigurator
 import org.openqa.selenium.Dimension
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
@@ -11,10 +12,17 @@ import org.openqa.selenium.remote.RemoteWebDriver
 // See: http://code.google.com/p/selenium/wiki/FirefoxDriver
 
 driver = {
-    //new FirefoxDriver()
-    new ChromeDriver()
-}
+    //Or add to the running comand -Dlog4j.configuration=file:///path/to/log4j.properties
+    //BasicConfigurator.configure();
+    String log4jConfPath = "./src/main/resources/log4j.properties"
+    PropertyConfigurator.configure(log4jConfPath)
 
+    //new FirefoxDriver()
+    WebDriverManager.chromedriver().setup()
+    def driverInstance = new ChromeDriver()
+    driverInstance.manage().window().maximize()
+    driverInstance
+}
 
 
 environments {
@@ -22,6 +30,7 @@ environments {
     // run as “gradle -Dgeb.env=chrome cucumber”
     // See: http://code.google.com/p/selenium/wiki/ChromeDriver
     chrome {
+        WebDriverManager.chromedriver().setup()
         ChromeOptions options = new ChromeOptions()
         Map<String, Object> prefs = new HashMap<String, Object>()
         prefs.put("credentials_enable_service", false)
@@ -42,6 +51,7 @@ environments {
     }
 
     chromeHeadless {
+        ChromeDriverManager.getInstance().setup()
         ChromeOptions options = new ChromeOptions()
         Map<String, Object> prefs = new HashMap<String, Object>()
         prefs.put("credentials_enable_service", false)

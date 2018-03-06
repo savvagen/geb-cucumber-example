@@ -6,6 +6,7 @@ buildscript {
         // if you use the version of cucumber-jvm that the plugin was built with
         classpath "info.cukes:cucumber-core:1.2.5"
         classpath "io.qameta.allure:allure-gradle:2.3"
+        classpath 'org.jsonschema2pojo:jsonschema2pojo-gradle-plugin:0.5.1'
     }
 }
 
@@ -13,10 +14,11 @@ plugins {
     id "java"
     id "groovy"
     id "idea"
+    id "eclipse"
     id "com.github.samueltbrown.cucumber" version "0.9"
     id "com.energizedwork.idea-project-components" version "1.2"
     id "com.energizedwork.idea-base" version "1.2"
-    id "com.energizedwork.webdriver-binaries" version "1.0"
+    //id "com.energizedwork.webdriver-binaries" version "1.0"
 }
 
 
@@ -45,12 +47,20 @@ dependencies {
     compile "org.gebish:geb-testng:$gebVersion"
     compile "org.seleniumhq.selenium:selenium-api:$seleniumVersion"
 
+
     //Cucumber with Geb
     compile "info.cukes:cucumber-core:$cucumberJvmVersion"
     compile "info.cukes:cucumber-groovy:$cucumberJvmVersion"
     // this supplies some pre-built cucumber steps for driving Geb,
     // see https://github.com/tomdcc/geb-cucumber
     compile "io.jdev.geb:geb-cucumber:0.3"
+
+    // If using Spock, need to depend on geb-spock
+    compile "org.gebish:geb-spock:$gebVersion"
+    compile("org.spockframework:spock-core:1.1-groovy-2.4") {
+        exclude group: "org.codehaus.groovy"
+    }
+    testRuntime('com.athaydes:spock-reports:1.2.7')
 
     // pick whichever drivers you want. We test against most of them here.
     // see src/test/resources/GebConfig.groovy for how to switch between them
@@ -68,10 +78,63 @@ dependencies {
     compile group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '2.1.0'
     compile group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'
     compile group: 'org.hamcrest', name: 'java-hamcrest', version: '2.0.0.0'
+
+    //Other
+    compile group: 'log4j', name: 'log4j', version: '1.2.17'
+    compile group: 'org.slf4j', name: 'slf4j-jdk14', version: '1.7.22'
+    compile group: 'com.codepine.api', name: 'testrail-api-java-client', version: '2.0.0'
+
+    //RestApi
+    compile group: 'org.codehaus.groovy.modules.http-builder', name: 'http-builder', version: '0.7.1'
+    compile group: 'io.github.http-builder-ng', name: 'http-builder-ng-core', version: '1.0.3'
+    //Json libraries
+    compile group: 'io.rest-assured', name: 'json-path', version: '3.0.5'
+    compile group: 'io.rest-assured', name: 'json-schema-validator', version: '3.0.5'
+    compile group: 'io.rest-assured', name: 'xml-path', version: '3.0.5'
+    compile 'commons-lang:commons-lang:2.6'
+    compile 'javax.validation:validation-api:1.1.0.CR2'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.1.4'
+
 }
 
 
-webdriverBinaries {
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.0'
+    jarFile = './gradle/wrapper/gradle-wrapper.jar'
+}
+
+
+apply plugin: 'jsonschema2pojo'
+
+jsonSchema2Pojo {
+    // Location of the JSON Schema file(s). This may refer to a single file or a directory of files.
+    source = files("${sourceSets.main.output.resourcesDir}/json")
+
+    // Target directory for generated Java source files. The plugin will add this directory to the
+    // java source set so the compiler will find and compile the newly generated source files.
+
+    //targetDirectory = file("${project.buildDir}/generated-sources/js2p")
+    targetDirectory = file("src/main/groovy/com/example/pojo")
+
+    // Package name used for generated Java classes (for types where a fully qualified name has not
+    // been supplied in the schema using the 'javaType' property).
+    targetPackage = ''
+
+    // The type of input documents that will be read. Supported values:
+    //  - jsonschema (schema documents, containing formal rules that describe the structure of json data)
+    //  - json (documents that represent an example of the kind of json data that the generated Java types
+    //          will be mapped to)
+    sourceType = 'json'
+    // Generate json schema - ./gradlew generateJsonSchema2Pojo
+}
+
+
+
+
+/**
+ * Configure the webdriver binaries (use plugin com.energizedwork.webdriver-binaries )
+ */
+/*webdriverBinaries {
     chromedriver chromeDriverVersion
     geckodriver geckoDriverVersion
 }
@@ -88,7 +151,8 @@ configureGeckoDriverBinary {
     addBinaryAware { path ->
         tasks.cucumber.jvmOptions.systemProperties("webdriver.gecko.driver": path)
     }
-}
+}*/
+
 
 
 apply plugin: 'io.qameta.allure'
@@ -102,6 +166,14 @@ allure {
     downloadLink = 'https://dl.bintray.com/qameta/generic/io/qameta/allure/allure/2.6.0/allure-2.6.0.zip'
 
 }
+
+
+import io.qameta.allure.gradle.task.AllureReport
+
+task allureAggregatedReport(type: AllureReport) {
+    allure.resultsDir
+}
+
 
 
 cucumber {
@@ -121,15 +193,27 @@ cucumber {
 }
 
 
-tasks.cucumber {
+/**
+ * Cucumber task with generating drivers from webdriver-binaries
+ */
+/*tasks.cucumber {
     dependsOn configureChromeDriverBinary, configureGeckoDriverBinary
     jvmOptions.systemProperties([
             "geb.cucumber.step.packages": "com.example.pages",
             "geb.env": System.getProperty("geb.env"),
     ])
+}*/
+
+/**
+ * Default task with generating drivers from WebrdriverManager
+ */
+tasks.cucumber {
+    System.setProperty "geb.env", "chrome"
+    jvmOptions.systemProperties([
+            "geb.cucumber.step.packages": "com.example.pages",
+            "geb.env": System.getProperty("geb.env"),
+    ])
 }
-
-
 
 
 tasks.withType(GroovyCompile) {
@@ -139,3 +223,65 @@ tasks.withType(GroovyCompile) {
 ideaProjectComponents {
     file "gradle/idea/ideaCodeStyle.xml"
 }
+
+
+
+clean.doFirst {
+    delete "${rootDir}/.allure"
+    delete "${rootDir}/allure-results"
+    delete "${rootDir}/target"
+    delete "${rootDir}/build"
+    delete "${rootDir}/video"
+    delete "${rootDir}/out"
+    delete "${rootDir}/src/main/resources/logs/log_file.log"
+    delete "${rootDir}/src/main/resources/logs/test_log.log"
+    delete "${rootDir}/src/main/resources/logs/all_logs.log"
+    delete "${rootDir}/src/main/groovy/com/example/pojo"
+
+}
+
+
+test{
+    systemProperty "log4j.configuration", "file:///path/to/log4j.properties"
+    systemProperties "geb.build.reportsDir": "$reportsDir/geb"
+    systemProperty "file.encoding", "utf-8"
+    useTestNG() {
+        //file("src/test/groovy/ui/SpokTests.groovy")
+        suiteXmlFiles << new File("src/test/resources/", "suite.xml")
+    }
+}
+test.finalizedBy allureAggregatedReport
+
+
+drivers.each { driver ->
+    task "${driver}Test"(type: Test) {
+        systemProperty "log4j.configuration", "file:///path/to/log4j.properties"
+        systemProperty "geb.env", "${driver}"
+        systemProperties "geb.build.reportsDir": "$reportsDir/geb"
+        useTestNG() {
+            suiteXmlFiles << new File("src/test/resources/", "suite.xml")
+        }
+    }
+}
+drivers.collect { tasks["${it}Test"].finalizedBy allureAggregatedReport }
+
+
+
+/*
+drivers.each { driver ->
+        task "${driver}Spock"(type: Test) {
+            systemProperty 'com.athaydes.spockframework.report.outputDir', 'build/reports/spock'
+            systemProperty "testDriver", "${driver}"
+            systemProperty "test.single", "AcceptanceTests.groovy"
+        }
+    }
+drivers.collect { tasks["${it}Spock"].finalizedBy allureAggregatedReport }
+*/
+
+
+task apiTest(type: Test){
+    useTestNG(){
+        suiteXmlFiles << new File("src/test/resources/", "suiteApi.xml")
+    }
+}
+apiTest.finalizedBy allureAggregatedReport

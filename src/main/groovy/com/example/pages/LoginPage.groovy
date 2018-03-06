@@ -2,7 +2,7 @@ package com.example.pages
 
 import geb.Page
 import io.qameta.allure.Step
-import com.example.users.User
+import com.example.users.TestUser
 import org.openqa.selenium.Keys
 
 class LoginPage extends Page {
@@ -54,7 +54,7 @@ class LoginPage extends Page {
     }
 
     @Step("Login with credentials: {user.email} / {user.password} ")
-    AccountPage loginAs(User user){
+    AccountPage loginAs(TestUser user){
         emailField << user.getEmail() << Keys.ENTER
         waitFor {passwordField.displayed}
         passwordField << user.getPassword() << Keys.ENTER

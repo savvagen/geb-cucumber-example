@@ -1,0 +1,15 @@
+{
+  "user": {
+    "userId": 1,
+    "firstName": "Test",
+    "lastName": "TestUser",
+    "email": "genchevskiy.test@gmail.com",
+    "password": "s.g19021992",
+    "phones": [
+      "+380995475717",
+      "+380995475718"
+    ]
+  },
+  "status": "success",
+  "message": "User have been registered successfully!"
+}
