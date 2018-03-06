@@ -38,6 +38,7 @@ class ApiExampleTests {
                 assert resp.statusLine.statusCode == 200
                 assert json.userId == 1
                 assert json.phones.size() == 2
+
                 println "Got response: ${resp.statusLine}"
                 println "Content-Type: ${resp.headers.'Content-Type'}"
                 println new JsonBuilder(json).toPrettyString()
@@ -57,6 +58,7 @@ class ApiExampleTests {
                 assert resp.statusLine.statusCode == 200
                 assert json.status == "success"
                 assert json.message == "User have been registered successfully!"
+
                 println "Got response: ${resp.statusLine}"
                 println "Content-Type: ${resp.headers.'Content-Type'}"
                 println new JsonBuilder(json).toPrettyString()
