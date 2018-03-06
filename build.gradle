@@ -42,6 +42,7 @@ repositories {
 }
 
 dependencies {
+    testCompile('junit:junit:4.12')
     compile "org.codehaus.groovy:groovy-all:$groovyVersion"
     compile "org.gebish:geb-core:$gebVersion"
     compile "org.gebish:geb-testng:$gebVersion"
@@ -207,14 +208,6 @@ tasks.cucumber {
 }
 
 
-tasks.withType(GroovyCompile) {
-    groovyOptions.forkOptions.memoryMaximumSize = '256m'
-}
-
-ideaProjectComponents {
-    file "gradle/idea/ideaCodeStyle.xml"
-}
-
 
 
 clean.doFirst {
@@ -257,7 +250,6 @@ drivers.each { driver ->
 drivers.collect { tasks["${it}Test"].finalizedBy allureAggregatedReport }
 
 
-
 drivers.each { driver ->
         task "${driver}Spock"(type: Test) {
             systemProperty 'com.athaydes.spockframework.report.showCodeBlocks', true
@@ -276,3 +268,24 @@ task apiTest(type: Test){
     }
 }
 apiTest.finalizedBy allureAggregatedReport
+
+
+
+
+tasks.withType(Test) {
+    maxHeapSize = "1g"
+    jvmArgs '-XX:MaxMetaspaceSize=128m'
+    testLogging {
+        exceptionFormat = 'full'
+    }
+}
+
+tasks.withType(GroovyCompile) {
+    groovyOptions.forkOptions.memoryMaximumSize = '256m'
+}
+
+
+ideaProjectComponents {
+    file "gradle/idea/ideaCodeStyle.xml"
+}
+
