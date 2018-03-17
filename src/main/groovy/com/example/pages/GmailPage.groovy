@@ -9,20 +9,21 @@ import org.openqa.selenium.By
 class GmailPage extends Page {
 
     String forEmail
+    def userEmail = forEmail ?: "genchevskiy.test@gmail.com"
 
     static url = "/mail.google.com/mail/u/0/#inbox"
 
     static atCheckWaiting = 10
 
     static at = {
-        def email = forEmail ?: "genchevskiy.test@gmail.com"
-        title.contains(" - ${email} - Gmail")
+
+        title.contains(" - ${userEmail} - Gmail")
         accountButton.displayed
         newMessageButton.displayed
     }
 
     static content = {
-        accountButton(wait: 10) { $("a", title: contains('(genchevskiy.test@gmail.com)')) }
+        accountButton(wait: 10) { $("a", title: contains("($userEmail)")) }
         submitLogout(wait: 5){ $("a", text: "Выйти").click() }
         newMessageButton(wait: 5) { $(By.xpath('//div[contains(text(), "НАПИСАТЬ")]')) }
         messageForm(wait: 8){ module(MessageForm) }
