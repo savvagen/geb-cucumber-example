@@ -226,9 +226,9 @@ clean.doFirst {
 
 
 test{
+    systemProperty "file.encoding", "utf-8"
     systemProperty "log4j.configuration", "file:///path/to/log4j.properties"
     systemProperties "geb.build.reportsDir": "$reportsDir/geb"
-    systemProperty "file.encoding", "utf-8"
     useTestNG() {
         //file("src/test/groovy/ui/SpokTests.groovy")
         suiteXmlFiles << new File("src/test/resources/", "suite.xml")

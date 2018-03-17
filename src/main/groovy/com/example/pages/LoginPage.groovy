@@ -17,7 +17,7 @@ class LoginPage extends Page {
         passwordSubmit { $("#passwordNext").click() }
         accountsForm { $("form[role='presentation']")}
         //Another implementation
-        loginField {$("form").identifier()}
+        loginField { $("form").identifier() }
         passFieldd {$("form").password()}
 
     }
@@ -27,26 +27,7 @@ class LoginPage extends Page {
         //emailField.displayed || passwordField.displayed
     }
 
-
-    @Step('Authorize with credentials')
-    AccountPage login(String email, String password){
-        emailField << email << Keys.ENTER
-        waitFor {passwordField.displayed}
-        passwordField.value(password)
-        passwordSubmit
-        browser.at(AccountPage)
-    }
-
-    //Another implementation
-    AccountPage loginWith(String email, String pass){
-        loginField = email << Keys.ENTER
-        waitFor {passwordField.displayed}
-        passFieldd = pass << Keys.ENTER
-        browser.page AccountPage
-    }
-
-
-    // Fluent object realization
+    //Fluent Page Objects
 
     @Step("Open Login page")
     LoginPage open(){
@@ -61,6 +42,36 @@ class LoginPage extends Page {
         passwordField << user.getPassword() << Keys.ENTER
         browser.at AccountPage
     }
+
+    //Another implementation
+    AccountPage loginWith(String email, String pass){
+        loginField = email << Keys.ENTER
+        waitFor {passwordField.displayed}
+        passFieldd = pass << Keys.ENTER
+        browser.page AccountPage
+    }
+
+
+    // Void Page Objects
+
+    @Step
+    void loginWithCreds(String email, String password){
+        emailField << email << Keys.ENTER
+        waitFor {passwordField.displayed}
+        passwordField << password << Keys.ENTER
+    }
+
+
+    @Step('Authorize with credentials')
+    AccountPage login(String email, String password){
+        emailField << email << Keys.ENTER
+        waitFor {passwordField.displayed}
+        passwordField.value(password)
+        passwordSubmit
+        browser.at(AccountPage)
+    }
+
+
 
 
 }

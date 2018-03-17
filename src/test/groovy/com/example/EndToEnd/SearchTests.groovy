@@ -8,16 +8,13 @@ import org.openqa.selenium.Keys
 import org.testng.annotations.Listeners
 import org.testng.annotations.Test
 
-import java.util.regex.Pattern
-
 import static geb.Browser.*
-import static org.hamcrest.MatcherAssert.assertThat
 import static org.hamcrest.MatcherAssert.assertThat
 import static org.hamcrest.Matchers.equalTo
 import static org.hamcrest.Matchers.is
 import static org.openqa.selenium.Keys.*
 import static org.testng.Assert.assertEquals
-import static org.testng.Assert.assertEquals
+
 
 
 @Listeners(TestListener.class)
@@ -70,6 +67,11 @@ class SearchTests  extends TestBase {
         waitFor{ $(".srg .g", 1).displayed }
         assertThat($(".srg .g").size(), equalTo(10))
     }
+
+
+
+
+
 
     @Test
     void searchTestExample1() {
