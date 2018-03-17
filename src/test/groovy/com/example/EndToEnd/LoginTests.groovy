@@ -27,16 +27,15 @@ class LoginTests extends TestBase {
 
 
 
-    /*@Test
-    void testExample2(){
+    @Test
+    void demoLogin(){
         to LoginPage
         $("form").identifier = "genchevskiy.test@gmail.com" << Keys.ENTER
         waitFor { $("form").password().displayed }
         $("form").password = "s.g19021992" << Keys.ENTER
-
-        waitFor { $("a[aria-label*='(genchevskiy.test@gmail.com)']").displayed }
+        isAt AccountPage
         assert driver.currentUrl.contains('https://myaccount.google.com/')
-    }*/
+    }
 
 
     @Test

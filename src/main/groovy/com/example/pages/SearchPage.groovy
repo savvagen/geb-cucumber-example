@@ -7,6 +7,7 @@ import org.openqa.selenium.By
 import org.openqa.selenium.Keys
 
 class SearchPage extends Page{
+
     static atCheckWaiting = 10
 
     static at = {
@@ -19,8 +20,11 @@ class SearchPage extends Page{
     static content = {
         searchField(wait: 8, required: true) { $(By.name("q"))}
         searchResults{ module(SearchResults)}
-        //Create element with parameter
+        //Creating elements with parameter
         pElement {pName -> $("input", name: pName)}
+        pTitle1 {pIndex -> $(".srg .g h3 > a", pIndex)}
+        pTitle2 {pIndex -> $(".srg .g:nth-child(${pIndex}) h3 > a") }
+        pTitle3 {pIndex -> $(By.xpath("//div[@class='srg']/g[${pIndex}]//h3/a")) }
     }
 
     @Step

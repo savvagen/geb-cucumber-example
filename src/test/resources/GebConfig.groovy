@@ -25,6 +25,21 @@ driver = {
 }
 
 
+
+waiting{
+    timeout = 10
+    includeCauseInMessage = true
+    baseNavigatorWaiting = 10
+}
+
+baseUrl = "http:/"
+
+reportsDir = "build/geb-reports"
+reportOnTestFailureOnly = false
+atCheckWaiting = true
+
+
+
 environments {
 
     // run as “gradle -Dgeb.env=chrome cucumber”
@@ -99,16 +114,4 @@ environments {
     }
 }
 
-
-waiting{
-    timeout = 10
-    includeCauseInMessage = true
-    baseNavigatorWaiting = 10
-}
-
-baseUrl = "http:/"
-
-reportsDir = "build/geb-reports"
-reportOnTestFailureOnly = false
-atCheckWaiting = true
 

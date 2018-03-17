@@ -10,6 +10,7 @@ import geb.Browser
 import org.testng.annotations.AfterMethod
 import org.testng.annotations.Listeners
 import org.testng.annotations.Test
+import static org.testng.Assert.*;
 
 @Listeners(TestListener.class)
 class MessagesTests extends TestBase{
@@ -28,8 +29,9 @@ class MessagesTests extends TestBase{
         Browser.drive {
             to LoginPage
             loginAs(testUser)
-            to(new GmailPage(forEmail: testUser.getEmail()))
-            writeMessage().with(testUser.getEmail(), 'Test Message', "Hello Savva")
+            to GmailPage
+            isAt GmailPage
+            writeMessage().withAttachment(testUser.getEmail(), 'Test Message', "Hello Savva", "src/main/groovy/com/example/data/HelloWorld.txt")
             waitFor {
                 successMessage.displayed
                 successMessage.text() == "Письмо отправлено. Просмотреть сообщение"

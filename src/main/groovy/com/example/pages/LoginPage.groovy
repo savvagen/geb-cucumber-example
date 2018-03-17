@@ -27,6 +27,7 @@ class LoginPage extends Page {
         //emailField.displayed || passwordField.displayed
     }
 
+
     @Step('Authorize with credentials')
     AccountPage login(String email, String password){
         emailField << email << Keys.ENTER

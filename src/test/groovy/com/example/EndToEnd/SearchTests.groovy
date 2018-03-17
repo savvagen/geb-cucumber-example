@@ -4,13 +4,15 @@ import com.example.TestBase
 import com.example.listeners.TestListener
 import com.example.pages.SearchPage
 import geb.Browser
+import org.openqa.selenium.Keys
 import org.testng.annotations.Listeners
 import org.testng.annotations.Test
-
+import static geb.Browser.*
 import static org.hamcrest.MatcherAssert.assertThat
 import static org.hamcrest.MatcherAssert.assertThat
 import static org.hamcrest.Matchers.equalTo
 import static org.hamcrest.Matchers.is
+import static org.openqa.selenium.Keys.*
 import static org.testng.Assert.assertEquals
 import static org.testng.Assert.assertEquals
 
@@ -18,26 +20,58 @@ import static org.testng.Assert.assertEquals
 @Listeners(TestListener.class)
 class SearchTests  extends TestBase {
 
-    /*@Test
-    void testExample(){
-        to SearchPage
-        pElement("q") << "selenium webdriver" << Keys.chord(Keys.CONTROL, "a") << Keys.chord(Keys.CONTROL, "c")
-        assert pElement("q").value() == "selenium webdriver"
-        to SearchPage
-        pElement("q") << Keys.chord(Keys.CONTROL, "v") << Keys.ENTER
-        waitFor{
-            browser.$(".srg .g", 1).displayed
-        }
-        println browser.$(".srg .g").size()
-        println browser.$(".srg .g h3 > a", 0..2)*.text()
-        println browser.$(".srg .g h3 > a", 0..1)*.height
-        assert browser.$(".srg .g h3 > a", 0..1)*.text() == (["Selenium WebDriver", "Selenium WebDriver — Selenium Documentation"])
-    }*/
+
 
 
     @Test
+    void testExample(){
+        to SearchPage
+        $("input", name: 'q') << "selenium webdriver" << ENTER
+        isAt SearchPage
+        waitFor{
+            $(".srg .g", 1).displayed
+        }
+        assert $(".srg .g").size() == 10
+        assert title.contains("selenium webdriver")
+        assert $(".srg .g")*.each {element -> element.displayed}
+        assert $(".srg .g h3 > a").each { element -> element.text().contains("Selenium")}
+        assert $(".srg .g h3 > a", 0..1)*.text() == (["Selenium WebDriver",
+                                                      "Selenium WebDriver — Selenium Documentation"])
+    }
+
+    @Test
+    void searchDemo(){
+        drive {
+            go 'https://google.com'
+            waitFor {title == "Google" }
+            $('form', name: 'f').with {
+                q = "selenium webdriver" << ENTER
+                //btnK().click()
+            }
+            waitFor{ $(".srg .g", 1).displayed }
+            assert $(".srg .g").size() == 10
+            assert title.contains("selenium webdriver")
+            assert $(".srg .g")[0].$("h3 > a").text() == "Selenium WebDriver"
+            println $(".srg .g h3 > a").filter(text: 'Selenium WebDriver')*.text()
+        }
+    }
+
+
+    @Test
+    void chalangedTest(){
+        go "https://google.com"
+        $("input", name: 'q').value "Selenium WebDriver"
+        $("input", name: 'q') << chord(CONTROL, 'a') << chord(CONTROL, "c")
+        browser.getDriver().navigate().refresh()
+        waitFor {$("input", name: 'q').value() == ""}
+        $("input", name: 'q') << chord(LEFT_CONTROL, "v") << ENTER
+        waitFor{ $(".srg .g", 1).displayed }
+        assertThat($(".srg .g").size(), equalTo(10))
+    }
+
+    @Test
     void searchTestExample1() {
-        Browser.drive {
+        drive {
             to SearchPage
             search("Selenium Webdriver")
             assert searchResults.results.size() > 2

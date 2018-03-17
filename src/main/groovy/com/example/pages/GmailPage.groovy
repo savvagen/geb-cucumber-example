@@ -15,11 +15,8 @@ class GmailPage extends Page {
     static atCheckWaiting = 10
 
     static at = {
-        if (forEmail == null){
-            title.contains(" - genchevskiy.test@gmail.com - Gmail")
-        } else {
-            title.contains(" - ${forEmail} - Gmail")
-        }
+        def email = forEmail ?: "genchevskiy.test@gmail.com"
+        title.contains(" - ${email} - Gmail")
         accountButton.displayed
         newMessageButton.displayed
     }
