@@ -7,6 +7,9 @@ import geb.Browser
 import org.openqa.selenium.Keys
 import org.testng.annotations.Listeners
 import org.testng.annotations.Test
+
+import java.util.regex.Pattern
+
 import static geb.Browser.*
 import static org.hamcrest.MatcherAssert.assertThat
 import static org.hamcrest.MatcherAssert.assertThat
@@ -34,9 +37,8 @@ class SearchTests  extends TestBase {
         assert $(".srg .g").size() == 10
         assert title.contains("selenium webdriver")
         assert $(".srg .g")*.each {element -> element.displayed}
-        assert $(".srg .g h3 > a").each { element -> element.text().contains("Selenium")}
-        assert $(".srg .g h3 > a", 0..1)*.text() == (["Selenium WebDriver",
-                                                      "Selenium WebDriver — Selenium Documentation"])
+        assert $(".srg .g h3 > a").each { element -> element.text().contains("Selenium") }
+        assert $(".srg .g h3 > a", 0..1)*.text() == (["Selenium WebDriver", "Selenium WebDriver — Selenium Documentation"])
     }
 
     @Test
@@ -52,7 +54,7 @@ class SearchTests  extends TestBase {
             assert $(".srg .g").size() == 10
             assert title.contains("selenium webdriver")
             assert $(".srg .g")[0].$("h3 > a").text() == "Selenium WebDriver"
-            println $(".srg .g h3 > a").filter(text: 'Selenium WebDriver')*.text()
+            println $(".srg .g h3 > a").filter(text: ~/[sS]elenium [Ww]eb[dD]river/)*.text()
         }
     }
 
