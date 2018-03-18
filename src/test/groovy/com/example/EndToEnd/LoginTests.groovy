@@ -27,7 +27,7 @@ class LoginTests extends TestBase {
 
 
 
-    @Test
+    /*@Test
     void demoLogin(){
         to LoginPage
         $("form").identifier = "genchevskiy.test@gmail.com" << Keys.ENTER
@@ -35,8 +35,7 @@ class LoginTests extends TestBase {
         $("form").password = "s.g19021992" << Keys.ENTER
         isAt AccountPage
         assert driver.currentUrl.contains('https://myaccount.google.com/')
-    }
-
+    }*/
 
 
 

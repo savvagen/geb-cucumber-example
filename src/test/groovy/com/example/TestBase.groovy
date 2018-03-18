@@ -7,6 +7,8 @@ import com.example.pages.SearchPage
 import com.example.users.TestUser
 import geb.Browser
 import geb.testng.GebTestTrait
+import io.github.bonigarcia.wdm.ChromeDriverManager
+import org.openqa.selenium.chrome.ChromeDriver
 import org.testng.annotations.AfterClass
 import org.testng.annotations.BeforeClass
 
@@ -24,13 +26,13 @@ class TestBase implements GebTestTrait{
     void setUp(){
         testUser = new TestUser()
 
-        //Create browser instance - variant - 1
+        //Create browser instance: variant-1
         //ChromeDriverManager.getInstance().setup()
         //browser = new Browser(driver: new ChromeDriver())
         //browser.driver.manage().window().maximize()
 
 
-        //Create browser instance - variant - 2
+        //Create browser instance: variant-2
         //browser = new Browser()
         //browser.driver = new ChromeDriver()
 

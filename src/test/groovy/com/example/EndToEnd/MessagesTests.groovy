@@ -10,7 +10,8 @@ import geb.Browser
 import org.testng.annotations.AfterMethod
 import org.testng.annotations.Listeners
 import org.testng.annotations.Test
-import static org.testng.Assert.*;
+import static org.testng.Assert.*
+
 
 @Listeners(TestListener.class)
 class MessagesTests extends TestBase{
@@ -22,6 +23,8 @@ class MessagesTests extends TestBase{
         go "https://accounts.google.com/Logout"
         browser.getDriver().manage().deleteAllCookies()
     }
+
+
 
 
     @Test
@@ -41,7 +44,6 @@ class MessagesTests extends TestBase{
             assert messages[0].messageStart.text().contains("Hello Savva")
         }
     }
-
 
 
     @Test

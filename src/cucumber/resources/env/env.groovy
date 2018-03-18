@@ -29,8 +29,6 @@ Before { scenario ->
 
 After { scenario ->
     bindingUpdater?.remove()
-    theBrowser.go "https://accounts.google.com/Logout"
-    theBrowser.driver.manage().deleteAllCookies()
     // embed screenshot into cucumber report
     if (scenario.failed) {
         try {
@@ -41,6 +39,7 @@ After { scenario ->
             // HTMLUnit doesn't support screenshots
         }
     }
-
+    theBrowser.go "https://accounts.google.com/Logout"
+    theBrowser.driver.manage().deleteAllCookies()
 }
 

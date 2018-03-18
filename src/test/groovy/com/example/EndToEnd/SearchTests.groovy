@@ -22,8 +22,7 @@ class SearchTests  extends TestBase {
 
 
 
-
-    @Test
+    /*@Test
     void testExample(){
         to SearchPage
         $("input", name: 'q') << "selenium webdriver" << ENTER
@@ -52,6 +51,22 @@ class SearchTests  extends TestBase {
             assert title.contains("selenium webdriver")
             assert $(".srg .g")[0].$("h3 > a").text() == "Selenium WebDriver"
             println $(".srg .g h3 > a").filter(text: ~/[sS]elenium [Ww]eb[dD]river/)*.text()
+            //Collections of elements
+            println $(".srg .g h3").eq(0).text()
+            println find(".srg .g h3").getAt(1).$("a").text()
+            println find(".srg .g h3")[2].$("a").text()
+            println find(".srg .g h3").findAll().get(3).$("a").text()
+
+            println "###############"
+            println find(".srg .g h3").findAll {
+                println it.$("a").text()
+            }
+            println "###############"
+            println find(".srg .g h3").findAll {
+                el -> el.text().contains("kreisfahrer")
+            }.each {
+                println it.$("a").text()
+            }
         }
     }
 
@@ -66,9 +81,7 @@ class SearchTests  extends TestBase {
         $("input", name: 'q') << chord(LEFT_CONTROL, "v") << ENTER
         waitFor{ $(".srg .g", 1).displayed }
         assertThat($(".srg .g").size(), equalTo(10))
-    }
-
-
+    }*/
 
 
 
@@ -85,7 +98,6 @@ class SearchTests  extends TestBase {
         }
     }
 
-
     @Test
     void searchTestExample2() {
         to SearchPage
@@ -95,7 +107,6 @@ class SearchTests  extends TestBase {
         assert searchResults.resultsList.each { element -> element.displayed }
         assert searchResults.results.each { element -> element.title.text().contains("Selenium") }
     }
-
 
     @Test
     void searchTestExample3() {

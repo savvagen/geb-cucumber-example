@@ -58,7 +58,7 @@ class AcceptanceTests extends GebSpec {
 
 
 
-    def "user can make authorization"(){
+    def "user can authorize"(){
         given:
         "go to Login page"
         to LoginPage
@@ -73,6 +73,7 @@ class AcceptanceTests extends GebSpec {
 
         and:
         "account button should be visible"
+        title == "Test"
         accountButton.displayed
     }
 
