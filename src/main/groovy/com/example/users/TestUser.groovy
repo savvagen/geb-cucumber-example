@@ -1,7 +1,9 @@
 package com.example.users
 
-class TestUser {
+import jdk.nashorn.internal.ir.annotations.Immutable
 
+@Immutable
+class TestUser {
 
     String email
     String password

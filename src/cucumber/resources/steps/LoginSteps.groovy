@@ -15,5 +15,5 @@ When(~/User login with email: '(.*)' and password: '(.*)'/){String email, String
 
 Then(~/User is at account page/){ ->
     at AccountPage
-    assert page.accountButton.displayed
+    assert page.header.accountButton.displayed
 }

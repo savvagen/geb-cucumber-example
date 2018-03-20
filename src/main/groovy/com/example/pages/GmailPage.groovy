@@ -6,25 +6,21 @@ import com.example.modules.Message
 import io.qameta.allure.Step
 import org.openqa.selenium.By
 
-class GmailPage extends Page {
+class GmailPage extends BasePage {
 
-    String forEmail
-    def userEmail = forEmail ?: "genchevskiy.test@gmail.com"
+    String forEmail = { it ?: header.email }
 
     static url = "/mail.google.com/mail/u/0/#inbox"
 
     static atCheckWaiting = 10
 
     static at = {
-
-        title.contains(" - ${userEmail} - Gmail")
-        accountButton.displayed
+        title.contains(" - ${forEmail} - Gmail")
+        header.accountButton.displayed
         newMessageButton.displayed
     }
 
     static content = {
-        accountButton(wait: 10) { $("a", title: contains("($userEmail)")) }
-        submitLogout(wait: 5){ $("a", text: "Выйти").click() }
         newMessageButton(wait: 5) { $(By.xpath('//div[contains(text(), "НАПИСАТЬ")]')) }
         messageForm(wait: 8){ module(MessageForm) }
         successMessage {$(By.xpath("/html/body/div[7]/div[3]/div/div[1]/div[5]/div[1]/div/div[3]/div/div/div[2]"))}
@@ -38,13 +34,6 @@ class GmailPage extends Page {
     GmailPage open(){
         browser.go url
         browser.at GmailPage
-    }
-
-    @Step("Logout")
-    LoginPage logOut(){
-        accountButton.click()
-        submitLogout
-        browser.at LoginPage
     }
 
     @Step("Press \"New Message Button\"")

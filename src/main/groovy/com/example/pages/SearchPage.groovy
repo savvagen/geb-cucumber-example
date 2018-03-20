@@ -28,13 +28,13 @@ class SearchPage extends Page{
     }
 
     @Step
-    SearchPage open(){
+    def open(){
         browser.go url
         browser.at SearchPage
     }
 
     @Step
-    SearchResults search(String searchQuery){
+    def search(String searchQuery){
         searchField.value(searchQuery) << Keys.ENTER
         return module(SearchResults)
     }

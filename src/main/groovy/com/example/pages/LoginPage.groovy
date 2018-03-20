@@ -16,9 +16,9 @@ class LoginPage extends Page {
         passwordField(required: true, wait: 8) { $('input[type="password"]') }
         passwordSubmit { $("#passwordNext").click() }
         accountsForm { $("form[role='presentation']")}
-        //Another implementation
+        //2-nd implementation
         loginField { $("form").identifier() }
-        passFieldd {$("form").password()}
+        passField {$("form").password()}
 
     }
 
@@ -39,16 +39,28 @@ class LoginPage extends Page {
     AccountPage loginAs(TestUser user){
         emailField << user.getEmail() << Keys.ENTER
         waitFor {passwordField.displayed}
-        passwordField << user.getPassword() << Keys.ENTER
+        passwordField.value(user.getPassword())
+        passwordSubmit
+        browser.at(AccountPage)
+    }
+
+    //2-nd implementation
+    @Step('Authorize with credentials')
+    def loginWith(String email, String pass){
+        loginField = email << Keys.ENTER
+        waitFor {passwordField.displayed}
+        passField = pass << Keys.ENTER
         browser.at AccountPage
     }
 
-    //Another implementation
-    AccountPage loginWith(String email, String pass){
-        loginField = email << Keys.ENTER
+    //3-d implementation
+    @Step('Authorize with credentials')
+    def login(String email, String pass){
+        emailField << email << Keys.ENTER
         waitFor {passwordField.displayed}
-        passFieldd = pass << Keys.ENTER
+        passwordField << pass << Keys.ENTER
         browser.page AccountPage
+        // You need to add "isAt Page" method after execution of this type of function
     }
 
 
@@ -60,18 +72,6 @@ class LoginPage extends Page {
         waitFor {passwordField.displayed}
         passwordField << password << Keys.ENTER
     }
-
-
-    @Step('Authorize with credentials')
-    AccountPage login(String email, String password){
-        emailField << email << Keys.ENTER
-        waitFor {passwordField.displayed}
-        passwordField.value(password)
-        passwordSubmit
-        browser.at(AccountPage)
-    }
-
-
 
 
 }

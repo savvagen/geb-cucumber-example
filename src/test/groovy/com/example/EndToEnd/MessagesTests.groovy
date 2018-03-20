@@ -31,10 +31,12 @@ class MessagesTests extends TestBase{
     void messageTest1() {
         Browser.drive {
             to LoginPage
-            loginAs(testUser)
-            to GmailPage
-            isAt GmailPage
-            writeMessage().withAttachment(testUser.getEmail(), 'Test Message', "Hello Savva", "src/main/groovy/com/example/data/HelloWorld.txt")
+            loginAs(testUser).goMail()
+            isAt new GmailPage(forEmail: testUser.getEmail())
+            writeMessage().withAttachment(testUser.getEmail(),
+                    'Test Message',
+                    "Hello Savva",
+                    "src/main/groovy/com/example/data/HelloWorld.txt")
             waitFor {
                 successMessage.displayed
                 successMessage.text() == "Письмо отправлено. Просмотреть сообщение"
@@ -50,13 +52,15 @@ class MessagesTests extends TestBase{
     void messageTest2(){
         to LoginPage
         login(testUser.getEmail(), testUser.getPassword())
-        to(new GmailPage(forEmail: testUser.getEmail()))
+        isAt AccountPage
+        to GmailPage
         writeMessage().with(testUser.getEmail(), 'Test Message', "Hello Savva")
         waitFor {
             successMessage.displayed
             successMessage.text() == "Письмо отправлено. Просмотреть сообщение"
         }
         getDriver().navigate().refresh()
+        assert header.accountButton.displayed
         assert messages.get(0).subject.text() == "Test Message"
         assert messages[0].messageStart.text().contains("Hello Savva")
     }
@@ -66,8 +70,8 @@ class MessagesTests extends TestBase{
     @Test
     void messageTest3(){
         TestUser user = new TestUser()
-        AccountPage accountPage = to(new LoginPage()).loginAs(user)
-        GmailPage gmailPage = to(new GmailPage(forEmail: testUser.getEmail()))
+        def gmailPage = to(new LoginPage()).loginAs(user)
+                .goMail()
                 .writeMessage()
                 .with(user.getEmail(), 'Test Message', "Hello Savva")
         browser.waitFor{
@@ -84,12 +88,15 @@ class MessagesTests extends TestBase{
     void messageTest4(){
         TestUser user = new TestUser()
         loginPage.open().loginAs(user)
-        gmailPage.open().writeMessage().with(user.getEmail(), 'Test Message', "Hello Savva")
+                .goMail()
+                .writeMessage()
+                .with(user.getEmail(), 'Test Message', "Hello Savva")
         browser.waitFor{
             gmailPage.successMessage.displayed
             gmailPage.successMessage.text() == "Письмо отправлено. Просмотреть сообщение"
         }
         browser.getDriver().navigate().refresh()
+        assert gmailPage.header.accountButton.displayed
         assert gmailPage.messages.get(0).subject.text() == "Test Message"
         assert gmailPage.messages[0].messageStart.text().contains("Hello Savva")
     }
@@ -98,9 +105,8 @@ class MessagesTests extends TestBase{
     @Test
     void messageTestWithFileUpload(){
         TestUser user = new TestUser()
-        loginPage.open()
-                .loginAs(user)
-        gmailPage.open()
+        loginPage.open().loginAs(user)
+                .goMail()
                 .writeMessage()
                 .withAttachment(user.getEmail(),
                 'Test Message',

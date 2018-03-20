@@ -8,9 +8,7 @@ import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.remote.DesiredCapabilities
 import org.openqa.selenium.remote.RemoteWebDriver
 
-// Use firefox as the default
-// See: http://code.google.com/p/selenium/wiki/FirefoxDriver
-
+// Use firefox or chrome as the default
 driver = {
     //Or add to the running comand -Dlog4j.configuration=file:///path/to/log4j.properties
     //BasicConfigurator.configure();
@@ -23,7 +21,6 @@ driver = {
     driverInstance.manage().window().maximize()
     driverInstance
 }
-
 
 
 waiting{

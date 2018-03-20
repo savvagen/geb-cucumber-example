@@ -73,8 +73,8 @@ class AcceptanceTests extends GebSpec {
 
         and:
         "account button should be visible"
-        title == "Test"
-        accountButton.displayed
+        //title == "Test" //This is for assertion error demo
+        header.accountButton.displayed
     }
 
 
@@ -97,6 +97,7 @@ class AcceptanceTests extends GebSpec {
 
         then:
         getDriver().navigate().refresh()
+        header.accountButton.displayed
         messages.get(0).subject.text() == "Test Message"
         messages[0].messageStart.text().contains("Hello Savva")
     }
