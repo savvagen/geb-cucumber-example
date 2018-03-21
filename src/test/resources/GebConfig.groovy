@@ -1,3 +1,4 @@
+import com.aoe.gebspockreports.GebReportingListener
 import io.github.bonigarcia.wdm.ChromeDriverManager
 import io.github.bonigarcia.wdm.WebDriverManager
 import org.apache.log4j.PropertyConfigurator
@@ -7,6 +8,11 @@ import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.remote.DesiredCapabilities
 import org.openqa.selenium.remote.RemoteWebDriver
+
+
+reportingListener = new GebReportingListener()
+reportsDir = 'build/reports/spock'
+
 
 // Use firefox or chrome as the default
 driver = {

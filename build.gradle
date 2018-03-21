@@ -60,7 +60,8 @@ dependencies {
     compile("org.spockframework:spock-core:1.1-groovy-2.4") {
         exclude group: "org.codehaus.groovy"
     }
-    testCompile 'com.athaydes:spock-reports:1.3.2', { transitive = false }
+    compile 'com.aoe:geb-spock-reports:0.1.5'
+    compile 'com.athaydes:spock-reports:1.4.0', { transitive = false }
     //testRuntime('com.athaydes:spock-reports:1.2.7')
 
     // pick whichever drivers you want. We test against most of them here.
@@ -81,6 +82,9 @@ dependencies {
     compile group: 'org.hamcrest', name: 'java-hamcrest', version: '2.0.0.0'
     compile group: 'log4j', name: 'log4j', version: '1.2.17'
     compile group: 'org.slf4j', name: 'slf4j-jdk14', version: '1.7.22'
+    // recommended for logging
+    compile 'org.slf4j:slf4j-api:1.7.13'
+    compile 'org.slf4j:slf4j-simple:1.7.13'
 
     //Http builder with Json and JsonSchema2Pojo
     compile group: 'org.codehaus.groovy.modules.http-builder', name: 'http-builder', version: '0.7.1'
@@ -254,6 +258,12 @@ drivers.each { driver ->
         task "${driver}Spock"(type: Test) {
             systemProperty 'com.athaydes.spockframework.report.showCodeBlocks', true
             systemProperty 'com.athaydes.spockframework.report.outputDir', 'build/reports/spock'
+            systemProperty 'com.athaydes.spockframework.report.projectName', 'Google Project'
+            systemProperty 'com.athaydes.spockframework.report.projectVersion', '8.3'
+            systemProperty 'com.athaydes.spockframework.report.testSourceRoots', 'src/test/groovy'
+            systemProperty 'com.athaydes.spockframework.report.internal.HtmlReportCreator.printThrowableStackTrace', false
+            systemProperty 'com.athaydes.spockframework.report.hideEmptyBlocks', false
+
             systemProperty "testDriver", "${driver}"
             systemProperty "test.single", "AcceptanceTests.groovy"
         }

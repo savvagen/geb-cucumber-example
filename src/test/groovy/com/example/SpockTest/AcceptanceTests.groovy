@@ -7,6 +7,8 @@ import com.example.pages.SearchPage
 import com.example.users.TestUser
 import geb.spock.GebSpec
 import groovy.util.logging.Slf4j
+import org.openqa.selenium.OutputType
+import org.openqa.selenium.TakesScreenshot
 
 
 class AcceptanceTests extends GebSpec {
@@ -18,6 +20,9 @@ class AcceptanceTests extends GebSpec {
         user = new TestUser()
         println "Importing user: ${user.getEmail()} / ${user.getPassword()}"
         println 'base setupSpec()'
+
+        def browser = "Chrome - latest"
+        reportHeader "<h2>Browser: ${browser}</h2>"
     }
 
     def cleanupSpec() {
@@ -41,6 +46,7 @@ class AcceptanceTests extends GebSpec {
         given:
         "Go to the Search page"
         to SearchPage
+        reportInfo "Some information I want to show in the report"
 
         when:
         "Search for: Selenium Webdriver"
@@ -73,7 +79,7 @@ class AcceptanceTests extends GebSpec {
 
         and:
         "account button should be visible"
-        //title == "Test" //This is for assertion error demo
+        title == "Test" //This is for assertion error demo
         header.accountButton.displayed
     }
 
