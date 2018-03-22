@@ -41,7 +41,6 @@ For chrome
 For firefox
 ``` 
 ./gradlew firefoxSpock
-
 ```
 
    ##Configurations
@@ -131,8 +130,13 @@ environments {
         }
     }
 }
-
 ```
+
+
+   ##Configurations
+
+ Configure the framework typing following to `/src/test/resources/GebConfig.groovy` file:
+
    ##Links
 
  If you need more details about main futures and configurations switch to [presentation](https://docs.google.com/presentation/d/1p2zcIOuFeszPDvde9Tm0fuJCLygbeke0VkP1CpmufZE/edit?usp=sharing)
