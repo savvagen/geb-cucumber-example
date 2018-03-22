@@ -1,7 +1,74 @@
 # GEB framework example
 
 
-## How to run testing locally
+# How does tests look like?
+
+This framework gives you absolute freedom for writing tests on any pattern that you know:
+
+* Standard geb pattern:
+```
+@Test
+    void searchTestExample() {
+        drive {
+            to SearchPage
+            search("Selenium Webdriver")
+            assert searchResults.results.size() > 2
+            assert searchResults.get(1).title.text() == "Selenium WebDriver"
+            assert searchResults.resultsList.each { element -> element.displayed }
+            assert searchResults.results.each { element -> element.title.text().contains("Selenium") }
+        }
+    }
+```
+* Selenide pattern:
+```
+
+    @Test
+    void searchTestExample4() {
+        searchPage.open().search("Selenium WebDriver")
+        assertEquals(searchPage.searchResults.results[0].title.text(), 'Selenium WebDriver')
+        assertEquals(searchPage.searchResults.results.size(), 10)
+    }
+    
+    ...
+    
+    @Test
+    void searchTestExample() {
+        def results = searchPage.open().search("Selenium WebDriver")
+        assert results.get(1).title.text() == "Selenium WebDriver"
+        assert results.results[0].title.text() == 'Selenium WebDriver'
+        assert results.results.size() == 10
+        assert results.resultsCollection.each { element -> element.displayed }
+        assert results.results.each { element -> element.title.text().contains("Selenium") }
+    }
+
+```
+* BDD pattern:
+
+``` 
+ def "user can search"(){
+         given:
+         "Go to the Search page"
+         to SearchPage
+         reportInfo "Some information I want to show in the report"
+ 
+         when:
+         "Search for: Selenium Webdriver"
+         search("Selenium WebDriver")
+ 
+         then:
+         "verify results results"
+         //We can write conditions without assert
+         title == "Selenium WebDriver - Пошук Google"
+         searchResults.results.size() <= 10
+         searchResults.get(1).title.text() == "Selenium WebDriver"
+         searchResults.resultsList.each {element -> element.displayed}
+         searchResults.results.each {element -> element.title.text().contains("Selenium")}
+     }
+     
+```
+
+
+## How to run tests locally
 
 1. Run the testing using command:
 ```
@@ -17,7 +84,7 @@ or
 
 ```
 
-  ## How to run testing remotely
+  ## How to run tests remotely
 1. First - run the Selenoid locally (or remotely) folowing this [Selenoid example](https://github.com/savvagen/Selenoid-example)
 2. Run the testing using command after running of the Selenoid:
 ``` 
