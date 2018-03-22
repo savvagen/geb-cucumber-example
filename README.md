@@ -43,7 +43,7 @@ For firefox
 
 ```
 
-If you need more details about main futures and configurations switch to [presentation]("https://docs.google.com/presentation/d/1p2zcIOuFeszPDvde9Tm0fuJCLygbeke0VkP1CpmufZE/edit?usp=sharing")
+If you need more details about main futures and configurations switch to ![presentation]("https://docs.google.com/presentation/d/1p2zcIOuFeszPDvde9Tm0fuJCLygbeke0VkP1CpmufZE/edit?usp=sharing")
 
    Links:
     
