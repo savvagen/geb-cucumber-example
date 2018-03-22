@@ -17,7 +17,7 @@ or
 
 ```
 
-## How to run testing remotely
+  ## How to run testing remotely
 1. First - run the Selenoid locally (or remotely) folowing this [Selenoid example](https://github.com/savvagen/Selenoid-example)
 2. Run the testing using command after running of the Selenoid:
 ``` 
@@ -25,11 +25,11 @@ or
 
 ```
 
-## Run Cucumber test
+ ## Run Cucumber test
 
 * Use command: ``` ./gradlew cucumber ```
 
-## Run Spock tests
+ ## Run Spock tests
 
 * To run the Spock tests on different browsers use commands:
 
@@ -44,7 +44,7 @@ For firefox
 
 ```
 
-##Configurations
+   ##Configurations
 
  Configure the framework typing following to `/src/test/resources/GebConfig.groovy` file:
 
@@ -131,9 +131,9 @@ environments {
         }
     }
 }
-```
 
-##Links
+```
+   ##Links
 
  If you need more details about main futures and configurations switch to [presentation](https://docs.google.com/presentation/d/1p2zcIOuFeszPDvde9Tm0fuJCLygbeke0VkP1CpmufZE/edit?usp=sharing)
 
