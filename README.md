@@ -45,6 +45,5 @@ For firefox
 
 If you need more details about main futures and configurations switch to [presentation](https://docs.google.com/presentation/d/1p2zcIOuFeszPDvde9Tm0fuJCLygbeke0VkP1CpmufZE/edit?usp=sharing)
 
-   Links:
     
-[![presentation](https://docs.google.com/presentation/d/1p2zcIOuFeszPDvde9Tm0fuJCLygbeke0VkP1CpmufZE/edit#slide=id.p.jpg)](https://docs.google.com/presentation/d/1p2zcIOuFeszPDvde9Tm0fuJCLygbeke0VkP1CpmufZE/edit#slide=id.p)
+[![presentation](http://dl4.joxi.net/drive/2018/03/22/0028/3766/1896118/18/bb5c7ccbdf.jpg)](https://docs.google.com/presentation/d/1p2zcIOuFeszPDvde9Tm0fuJCLygbeke0VkP1CpmufZE/edit#slide=id.p)
