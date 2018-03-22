@@ -44,14 +44,12 @@ For firefox
 
 ```
 
-
-
 ##Configurations
 
-Configure the framework using `/src/test/resources/GebConfig.groovy` file
+ Configure the framework typing following to `/src/test/resources/GebConfig.groovy` file:
+
 
 ```
-
 // Use firefox or chrome as the default
 driver = {
     WebDriverManager.chromedriver().setup()
@@ -133,15 +131,10 @@ environments {
         }
     }
 }
-
-
 ```
-
-
-
 
 ##Links
 
-If you need more details about main futures and configurations switch to [presentation](https://docs.google.com/presentation/d/1p2zcIOuFeszPDvde9Tm0fuJCLygbeke0VkP1CpmufZE/edit?usp=sharing)
+ If you need more details about main futures and configurations switch to [presentation](https://docs.google.com/presentation/d/1p2zcIOuFeszPDvde9Tm0fuJCLygbeke0VkP1CpmufZE/edit?usp=sharing)
 
 [![presentation](http://dl4.joxi.net/drive/2018/03/22/0028/3766/1896118/18/bb5c7ccbdf.jpg)](https://docs.google.com/presentation/d/1p2zcIOuFeszPDvde9Tm0fuJCLygbeke0VkP1CpmufZE/edit#slide=id.p)
