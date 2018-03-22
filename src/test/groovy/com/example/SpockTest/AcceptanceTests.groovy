@@ -6,9 +6,6 @@ import com.example.pages.LoginPage
 import com.example.pages.SearchPage
 import com.example.users.TestUser
 import geb.spock.GebSpec
-import groovy.util.logging.Slf4j
-import org.openqa.selenium.OutputType
-import org.openqa.selenium.TakesScreenshot
 
 
 class AcceptanceTests extends GebSpec {
