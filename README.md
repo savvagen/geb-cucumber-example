@@ -23,3 +23,27 @@ or
 ./gradlew remoteTest
 
 ```
+
+## Run cucumber test
+
+* Use command: ``` ./gradlew cucumber ```
+
+## Run Spock tests
+
+* To run the Spock tests on different browsers use commands:
+
+For chrome
+```
+./gradlew chromeSpock
+```
+
+For firefox
+``` 
+./gradlew firefoxSpock
+
+```
+
+If you need more details about main futures and configurations switch to [presentation]("https://docs.google.com/presentation/d/1p2zcIOuFeszPDvde9Tm0fuJCLygbeke0VkP1CpmufZE/edit?usp=sharing")
+
+
+[![presentation](https://docs.google.com/presentation/d/1p2zcIOuFeszPDvde9Tm0fuJCLygbeke0VkP1CpmufZE/edit#slide=id.p)](https://docs.google.com/presentation/d/1p2zcIOuFeszPDvde9Tm0fuJCLygbeke0VkP1CpmufZE/edit#slide=id.p)
